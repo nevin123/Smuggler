@@ -5,14 +5,25 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     public Camera playerCamera;
+    public Vector3 cameraOffset;
+    public float speed;
+    public float smoothTime = 0.3F;
+
+    private Vector3 newPos;
+    private Vector3 velocity = Vector3.zero;
 
     // Use this for initialization
     void Start() {
-
+        if (playerCamera == null) {
+            playerCamera = Camera.main;
+        }
     }
 
     // Update is called once per frame
-    void Update() {
-        playerCamera.transform.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, -8);
+    void LateUpdate() {
+        newPos = transform.position + cameraOffset;
+
+        //playerCamera.transform.transform.position = Vector3.Lerp(playerCamera.transform.position, newPos, Time.deltaTime * speed);
+        playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity,smoothTime);
     }
 }
