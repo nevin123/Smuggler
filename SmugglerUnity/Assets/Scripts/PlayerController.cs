@@ -19,8 +19,6 @@ public class PlayerController : NetworkBehaviour {
         }
 
         Motor = GetComponent<PlayerMotor>();
-
-        jumpTimer = Motor.DefaultJumpTime + Motor.JumpBoosterDelay;
     }
 
 	void FixedUpdate()
@@ -31,36 +29,10 @@ public class PlayerController : NetworkBehaviour {
         //Jump
         if (Input.GetButton("Jump"))
         {
-            //Down jump button
-            if (Motor.isGrounded && !jump)
-            {
-                jump = true;
-                Motor.Jump(0, true);
-            }
-        } else 
+            Motor.Jump();
+        } else
         {
-            //Release jump button
-            jump = false;
-            jumpTimer = Motor.DefaultJumpTime + Motor.JumpBoosterDelay;
-        }
-        
-        //Jump
-        if (jump)
-        {
-            float _deltaTime = jumpTimer / Motor.DefaultJumpTime;
-
-            jumpTimer -= Time.fixedDeltaTime;
-
-            //Wait for delaytime
-            if(jumpTimer < Motor.DefaultJumpTime)
-                Motor.Jump(_deltaTime, false);
-
-            //Stop when time is over
-            if (jumpTimer <= 0)
-            {
-                jump = false;
-                jumpTimer = Motor.DefaultJumpTime + Motor.JumpBoosterDelay;
-            }
+            Motor.StopJump();
         }
     }
 }

@@ -24,6 +24,6 @@ public class CameraController : MonoBehaviour {
         newPos = transform.position + cameraOffset;
 
         //playerCamera.transform.transform.position = Vector3.Lerp(playerCamera.transform.position, newPos, Time.deltaTime * speed);
-        playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity,smoothTime);
+        playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity, smoothTime);
     }
 }

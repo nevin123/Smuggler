@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent (typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
 
     [Header("Movement Values")]
@@ -9,14 +9,52 @@ public class PlayerMotor : MonoBehaviour {
     public float DefaultJumpTime = 1;
     public float JumpBoosterDelay = 0.2f;
 
-    Rigidbody2D rb;
+    Rigidbody rb;
 
-    [HideInInspector]
-    public bool isGrounded = true;
+    bool jump = false;
+    bool holdJump = false;
+    float jumpTimer;
+
+    [SerializeField] bool isGrounded = true;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
+
+        //Set the jump timer
+        jumpTimer = DefaultJumpTime + JumpBoosterDelay;
+    }
+
+    void FixedUpdate()
+    {
+        if (!holdJump)
+            return;
+
+        //Down jump button
+        if (isGrounded && !jump)
+        {
+            jump = true;
+            rb.velocity = new Vector3(rb.velocity.x, JumpStrength, 0);
+        }
+
+        //Jump
+        if (jump)
+            {
+                float _deltaTime = jumpTimer / DefaultJumpTime;
+
+                jumpTimer -= Time.fixedDeltaTime;
+
+                //Wait for delaytime
+                if (jumpTimer < DefaultJumpTime)
+                    rb.velocity = rb.velocity + new Vector3(0, JumpStrength * 2 * _deltaTime * Time.fixedDeltaTime, 0);
+
+                //Stop when time is over
+                if (jumpTimer <= 0)
+                {
+                    jump = false;
+                    jumpTimer = DefaultJumpTime + JumpBoosterDelay;
+                }
+            }
     }
 
     /// <summary>
@@ -26,30 +64,35 @@ public class PlayerMotor : MonoBehaviour {
     public void MovePlayer(float _direction)
     {
         float _movementValue = _direction * MovementSpeed * Time.deltaTime;
-        rb.velocity = new Vector2(_movementValue, rb.velocity.y);
+        rb.velocity = new Vector3(_movementValue, rb.velocity.y, 0);
     }
 
     /// <summary>
     /// Make the player Jump
     /// </summary>
-    public void Jump(float _deltaTime, bool _start)
+    public void Jump()
     {
-        if (_start)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, JumpStrength);
-        } else
-        {
-            rb.velocity = rb.velocity + new Vector2(0, JumpStrength * 2 * _deltaTime * Time.fixedDeltaTime);
-        }
-        
+        holdJump = true;
+
         Debug.Log(rb.velocity.y);
+    }
+
+    /// <summary>
+    /// Stop Jump
+    /// </summary>
+    public void StopJump()
+    {
+        holdJump = false;
+
+        jump = false;
+        jumpTimer = DefaultJumpTime + JumpBoosterDelay;
     }
 
     /// <summary>
     /// On Collision Enter
     /// </summary>
     /// <param name="other"></param>
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter(Collision other)
     {
         //Reset is grounded
         if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
@@ -62,7 +105,7 @@ public class PlayerMotor : MonoBehaviour {
     /// On Collision Exit
     /// </summary>
     /// <param name="other"></param>
-    void OnCollisionExit2D(Collision2D other)
+    void OnCollisionExit(Collision other)
     {
         //Reset is grounded
         if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
