@@ -1,27 +1,59 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : NetworkBehaviour {
 
-    public Camera playerCamera;
-    public Vector3 cameraOffset;
-    public float speed;
-    public float smoothTime = 0.3F;
+    Camera playerCamera;
+    [SerializeField] Vector3 cameraOffset;
+    [SerializeField] float speed;
+    [SerializeField] float smoothTime = 0.3F;
 
     private Vector3 newPos;
     private Vector3 velocity = Vector3.zero;
 
     // Use this for initialization
     void Start() {
-        if (playerCamera == null) {
-            playerCamera = Camera.main;
+        //Destoy Script if this is not the local player
+        if(!isLocalPlayer)
+        {
+            Destroy(this);
+            return;
+        }
+
+        //Get the camera
+        playerCamera = Camera.main;
+
+        //Rotate the camera
+        if (!isServer)
+        {
+            playerCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+            Matrix4x4 mat = playerCamera.projectionMatrix;
+
+            mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
+            playerCamera.projectionMatrix = mat;
+
+            GL.invertCulling = true;
+        }
+        else
+        {
+            newPos = transform.position + new Vector3(cameraOffset.x, cameraOffset.y, -cameraOffset.z);
+            playerCamera.transform.rotation = Quaternion.identity;
         }
     }
 
     // Update is called once per frame
     void LateUpdate() {
-        newPos = transform.position + cameraOffset;
+        if (playerCamera == null)
+            return;
 
-        //playerCamera.transform.transform.position = Vector3.Lerp(playerCamera.transform.position, newPos, Time.deltaTime * speed);
+
+        if (transform.position.z < 0)
+            newPos = transform.position + cameraOffset;
+        else
+            newPos = transform.position + new Vector3(-cameraOffset.x, cameraOffset.y, -cameraOffset.z);
+
+
         playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity, smoothTime);
     }
 }

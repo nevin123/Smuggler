@@ -37,5 +37,28 @@ public class PlayerController : NetworkBehaviour {
         {
             Motor.StopJump();
         }
+
+        //Give
+        if(Input.GetButtonDown("Use"))
+        {
+            //Debug.DrawLine(transform.position, transform.position + transform.forward * 3);
+            RaycastHit hit;
+            Vector3 _dir = Vector3.zero;
+
+            if (isServer)
+                _dir = transform.forward;
+            else
+                _dir = -transform.forward;
+
+            Debug.DrawLine(transform.position, transform.position + _dir * 5, Color.red);
+
+            if(Physics.Raycast(transform.position, transform.forward, out hit))
+            {
+                if(hit.transform.tag == "Player")
+                {
+                    Debug.Log("Give");
+                }
+            }
+        }
     }
 }

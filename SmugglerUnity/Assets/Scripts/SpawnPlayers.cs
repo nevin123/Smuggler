@@ -18,5 +18,7 @@ public class SpawnPlayers : MonoBehaviour {
             player.transform.position = SpawnPointPlayer1.position;
         else
             player.transform.position = SpawnPointPlayer2.position;
+
+        player.GetComponent<MeshRenderer>().enabled = true;
     }
 }

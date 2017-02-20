@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 54402551779476952}
   - component: {fileID: 114274001994380386}
   - component: {fileID: 114123621695885580}
+  - component: {fileID: 114747515063902246}
   - component: {fileID: 114753030692799282}
   - component: {fileID: 114387339001606250}
-  - component: {fileID: 114747515063902246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -54,7 +54,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178979596217956}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_MotionVectors: 1
@@ -171,8 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feafabef0b528ce43bae1bd680306977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  cameraOffset: {x: 2, y: 2, z: -8}
+  cameraOffset: {x: 1, y: 2, z: -8}
   speed: 1
   smoothTime: 0.3
 --- !u!114 &114753030692799282
