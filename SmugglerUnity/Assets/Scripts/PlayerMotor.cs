@@ -30,6 +30,8 @@ public class PlayerMotor : MonoBehaviour {
         if (!holdJump)
             return;
 
+        //Jump code
+        #region jumping
         //Down jump button
         if (isGrounded && !jump)
         {
@@ -55,6 +57,7 @@ public class PlayerMotor : MonoBehaviour {
                     jumpTimer = DefaultJumpTime + JumpBoosterDelay;
                 }
             }
+        #endregion
     }
 
     /// <summary>
@@ -73,8 +76,6 @@ public class PlayerMotor : MonoBehaviour {
     public void Jump()
     {
         holdJump = true;
-
-        Debug.Log(rb.velocity.y);
     }
 
     /// <summary>
@@ -88,6 +89,7 @@ public class PlayerMotor : MonoBehaviour {
         jumpTimer = DefaultJumpTime + JumpBoosterDelay;
     }
 
+    #region collision detection
     /// <summary>
     /// On Collision Enter
     /// </summary>
@@ -113,4 +115,5 @@ public class PlayerMotor : MonoBehaviour {
             isGrounded = false;
         }
     }
+    #endregion
 }

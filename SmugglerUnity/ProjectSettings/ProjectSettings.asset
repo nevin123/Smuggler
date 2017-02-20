@@ -460,8 +460,9 @@ PlayerSettings:
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudServicesEnabled:
+    UNet: 1
+  cloudProjectId: dd9524cf-6b16-4d1b-9264-4ec295c5dce7
+  projectName: Smuggler
+  organizationId: nevin123
   cloudEnabled: 0

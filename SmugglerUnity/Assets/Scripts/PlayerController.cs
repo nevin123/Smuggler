@@ -11,6 +11,9 @@ public class PlayerController : NetworkBehaviour {
 
     void Start()
     {
+        //Move the player to the correct spawn point
+        SpawnPlayers.instance.SpawnPlayer(gameObject, isServer);
+
         //Remore the script if its not the local player
         if(!isLocalPlayer)
         {
