@@ -50,9 +50,9 @@ public class PlayerController : NetworkBehaviour {
             else
                 _dir = -transform.forward;
 
-            Debug.DrawLine(transform.position, _dir, Color.red);
+            Debug.DrawLine(transform.position, transform.position + _dir * 5, Color.red);
 
-            if(Physics.Raycast(transform.position, _dir, out hit))
+            if(Physics.Raycast(transform.position, transform.forward, out hit))
             {
                 if(hit.transform.tag == "Player")
                 {
