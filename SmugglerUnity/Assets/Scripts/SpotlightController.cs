@@ -11,6 +11,8 @@ public class SpotlightController : MonoBehaviour {
     private float rotationMax;
     private float rotationMin;
     private bool goBack;
+    private bool hitMax;
+    private bool hitMin;
 
     // Use this for initialization
     void Start() {
@@ -20,25 +22,37 @@ public class SpotlightController : MonoBehaviour {
 
         rotationMax = startRotationX + rotationLimit;
         rotationMin = startRotationX - rotationLimit;
+
+        Debug.Log(rotationMax);
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (spotlight.transform.localEulerAngles.x < rotationMax) {
-            goBack = true;
-        }
-        if (spotlight.transform.localEulerAngles.x > rotationMin) {
-            goBack = false;
+        if (!hitMax) {
+            if (spotlight.transform.localEulerAngles.x < rotationMax) {
+                spotlight.transform.Rotate(Vector3.up, rotationSpeed);
+            }
+            else {
+                hitMax = true;
+            }
         }
 
-        Debug.Log(string.Format("{0} : {1}({2}) : {2}", rotationMin, spotlight.transform.localEulerAngles.x, goBack, rotationMax));
+        //if (spotlight.transform.localEulerAngles.x < rotationMax && !hitMax) {
+        //    spotlight.transform.Rotate(Vector3.up, rotationSpeed);
+        //    hitMax = false;
+        //}
+        //else if (!hitMax) {
+        //    hitMax = true;
+        //}
 
-        if (!goBack) {
-            spotlight.transform.Rotate(Vector3.up, rotationSpeed);
-        }
-        else {
-            spotlight.transform.Rotate(Vector3.up, -rotationSpeed);
-        }
+        //if (spotlight.transform.localEulerAngles.x > rotationMin && !hitMin) {
+        //    spotlight.transform.Rotate(Vector3.up, -rotationSpeed);
+        //}
+        //else if (!hitMax) {
+        //    hitMin = true;
+        //}
+
+        //Debug.Log(string.Format("{0} : {1}({2}) : {2}", rotationMin, spotlight.transform.localEulerAngles.x, goBack, rotationMax));
     }
 }
