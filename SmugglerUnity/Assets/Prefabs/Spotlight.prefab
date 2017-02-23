@@ -9,19 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
+<<<<<<< HEAD
   m_RootGameObject: {fileID: 1135208666974606}
   m_IsPrefabParent: 1
 --- !u!1 &1135208666974606
+=======
+  m_RootGameObject: {fileID: 1661603106937050}
+  m_IsPrefabParent: 1
+--- !u!1 &1652796661619618
+>>>>>>> origin/master
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 4100547531118026}
   - component: {fileID: 33885139904631618}
   - component: {fileID: 23865797534102610}
   - component: {fileID: 114909875221166316}
+=======
+  - component: {fileID: 4737365040655694}
+  - component: {fileID: 108305888144334148}
+>>>>>>> origin/master
   m_Layer: 0
   m_Name: Spotlight
   m_TagString: Untagged
@@ -29,27 +40,45 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1357376287950172
+=======
+--- !u!1 &1661603106937050
+>>>>>>> origin/master
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 4550399668076392}
   - component: {fileID: 108969638514624682}
   m_Layer: 0
   m_Name: Spotlight (1)
+=======
+  - component: {fileID: 4174052476069352}
+  - component: {fileID: 33426677227436770}
+  - component: {fileID: 23684517146664620}
+  - component: {fileID: 114672869617972462}
+  m_Layer: 0
+  m_Name: Spotlight
+>>>>>>> origin/master
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &4100547531118026
+=======
+--- !u!4 &4174052476069352
+>>>>>>> origin/master
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1135208666974606}
   m_LocalRotation: {x: -0.00010229647, y: 0.7071068, z: -0.7071068, w: 0.00010229647}
   m_LocalPosition: {x: 1, y: 2.3, z: -1}
@@ -60,10 +89,23 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: -179.983}
 --- !u!4 &4550399668076392
+=======
+  m_GameObject: {fileID: 1661603106937050}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 5, y: 1.5, z: -1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children:
+  - {fileID: 4737365040655694}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 90}
+--- !u!4 &4737365040655694
+>>>>>>> origin/master
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1357376287950172}
   m_LocalRotation: {x: 0.00014466906, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -73,11 +115,26 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &23865797534102610
+=======
+  m_GameObject: {fileID: 1652796661619618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4174052476069352}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &23684517146664620
+>>>>>>> origin/master
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1135208666974606}
+=======
+  m_GameObject: {fileID: 1661603106937050}
+>>>>>>> origin/master
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,7 +143,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 5562127911f6c6b46ae216df056f6c53, type: 2}
+<<<<<<< HEAD
   - {fileID: 2100000, guid: 1adb6210174e7b04b9f5cdfbef4f4447, type: 2}
+=======
+  - {fileID: 2100000, guid: 7d97acfddcb3695459b9d28aa3e2ff5d, type: 2}
+>>>>>>> origin/master
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,29 +165,51 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+<<<<<<< HEAD
 --- !u!33 &33885139904631618
+=======
+--- !u!33 &33426677227436770
+>>>>>>> origin/master
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1135208666974606}
   m_Mesh: {fileID: 4300000, guid: 28af207f791b20c4db0d2d4f5744fab7, type: 3}
 --- !u!108 &108969638514624682
+=======
+  m_GameObject: {fileID: 1661603106937050}
+  m_Mesh: {fileID: 4300000, guid: bc50b2b44f97c614da7e8484189116f8, type: 3}
+--- !u!108 &108305888144334148
+>>>>>>> origin/master
 Light:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1357376287950172}
   m_Enabled: 1
   serializedVersion: 7
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+=======
+  m_GameObject: {fileID: 1652796661619618}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 0
+  m_Color: {r: 0.8897059, g: 0.88086295, b: 0.5691501, a: 1}
+>>>>>>> origin/master
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
+<<<<<<< HEAD
     m_Type: 0
+=======
+    m_Type: 2
+>>>>>>> origin/master
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -145,11 +228,16 @@ Light:
   m_BounceIntensity: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+<<<<<<< HEAD
 --- !u!114 &114909875221166316
+=======
+--- !u!114 &114672869617972462
+>>>>>>> origin/master
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1135208666974606}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -157,4 +245,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 0.5
+=======
+  m_GameObject: {fileID: 1661603106937050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17153c981d30a24ba965ba1a888aba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1
+>>>>>>> origin/master
   rotationLimit: 30

@@ -23,22 +23,17 @@ public class CameraController : NetworkBehaviour {
         //Get the camera
         playerCamera = Camera.main;
 
-        //Reset the camere
-        GL.invertCulling = false;
-        playerCamera.ResetProjectionMatrix();
-
         //Rotate the camera
         if (!isServer)
         {
             playerCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
-            
+            /*
             Matrix4x4 mat = playerCamera.projectionMatrix;
 
             mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
             playerCamera.projectionMatrix = mat;
 
-            //Fix the inverted scene
-            GL.invertCulling = true;
+            GL.invertCulling = true;*/
         }
         else
         {
@@ -59,5 +54,31 @@ public class CameraController : NetworkBehaviour {
 
 
         playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity, smoothTime);
+    }
+
+    void OnPreCull()
+    {
+        if (isServer)
+            return;
+
+        playerCamera.ResetWorldToCameraMatrix();
+        playerCamera.ResetProjectionMatrix();
+        playerCamera.projectionMatrix = playerCamera.projectionMatrix * Matrix4x4.Scale(new Vector3(-1, 1, 1));
+    }
+
+    void OnPreRender()
+    {
+        if (isServer)
+            return;
+
+        GL.SetRevertBackfacing(true);
+    }
+
+    void OnPostRender()
+    {
+        if (isServer)
+            return;
+
+        GL.SetRevertBackfacing(false);
     }
 }
