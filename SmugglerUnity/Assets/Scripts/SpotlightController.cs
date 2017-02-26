@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class SpotlightController : MonoBehaviour {
 
-    public float rotationLimit;
+    public float maxLimit;
+    public float minLimit;
     public float rotationSpeed;
     private float speed;
 
-    public float maxLimit;
-    public float minLimit;
-
-    private bool hitMax = false;
+    private bool hitMax;
 
     public LayerMask layers;
     private Light spotlight;
@@ -22,6 +20,10 @@ public class SpotlightController : MonoBehaviour {
     public Color alertColor;
 
     public bool debugMode;
+    private Color debugHit = Color.red;
+    private Color debugHidden = Color.green;
+
+    private bool targetVisible;
 
     // Use this for initialization
     void Start() {
@@ -64,11 +66,15 @@ public class SpotlightController : MonoBehaviour {
 
     public void OnChildTriggerEnter(Collider childCollider, Collider player) {
         if (player.tag == "Player") {
-            if (Physics.Linecast(transform.position, player.transform.position, layers)) {
-                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, Color.green, 3); }
+            RaycastHit hit;
+            if (Physics.Linecast(transform.position, player.transform.position, out hit, layers)) {
+                if (debugMode) {
+                    Debug.DrawLine(transform.position, hit.point, debugHit, 3);
+                    Debug.DrawLine(hit.point, player.transform.position, debugHidden, 3);
+                }
                 spotlight.color = defaultColor;
             } else {
-                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, Color.red, 3); }
+                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, debugHit, 3); }
                 spotlight.color = alertColor;
             }
         }
@@ -80,12 +86,18 @@ public class SpotlightController : MonoBehaviour {
     }
     public void OnChildTriggerStay(Collider childCollider, Collider player) {
         if (player.tag == "Player") {
-            if (Physics.Linecast(transform.position, player.transform.position, layers)) {
-                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, Color.green, 3); }
+            RaycastHit hit;
+            if (Physics.Linecast(transform.position, player.transform.position, out hit, layers)) {
+                if (debugMode) {
+                    Debug.DrawLine(transform.position, hit.point, debugHit, 3);
+                    Debug.DrawLine(hit.point, player.transform.position, debugHidden, 3);
+                }
                 spotlight.color = defaultColor;
             } else {
-                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, Color.red, 3); }
+                if (debugMode) { Debug.DrawLine(transform.position, player.transform.position, debugHit, 3); }
                 spotlight.color = alertColor;
+
+                Vector3.RotateTowards(transform.position, player.transform.position, 1, 1);
             }
         }
     }
