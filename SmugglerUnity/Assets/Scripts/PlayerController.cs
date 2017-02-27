@@ -27,7 +27,7 @@ public class PlayerController : NetworkBehaviour {
 	void FixedUpdate()
     {
         //Move Player
-        Motor.MovePlayer(Input.GetAxis("Horizontal"));
+        Motor.MovePlayer(Input.GetAxisRaw("Horizontal"));
 
         //Jump
         if (Input.GetButton("Jump"))
