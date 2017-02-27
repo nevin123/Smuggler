@@ -3,23 +3,26 @@ using UnityEngine;
 
 public class SpotlightController : MonoBehaviour {
 
+    [Header("Movement")]
     public float maxLimit;
     public float minLimit;
     public float rotationSpeed;
-    private float speed;
 
+    private float speed;
     private bool hitMax;
 
+    [Header("Player Detection")]
+    public bool debugMode;
     public LayerMask layers;
-    private Light spotlight;
     public float detectionRange;
+
     private GameObject lightCone;
+    private Light spotlight;
     private float lightAngle;
 
     private Color defaultColor;
     public Color alertColor;
-
-    public bool debugMode;
+    
     private Color debugHit = Color.red;
     private Color debugHidden = Color.green;
 
