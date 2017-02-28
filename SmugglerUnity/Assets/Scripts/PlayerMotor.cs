@@ -1,31 +1,48 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent (typeof(Rigidbody))]
-public class PlayerMotor : MonoBehaviour {
+public class PlayerMotor : NetworkBehaviour {
 
+    //Movement vars
     [Header("Movement Vars")]
     public float MovementSpeed = 50;
     public float JumpStrength = 10;
     public float DefaultJumpTime = 1;
     public float JumpBoosterDelay = 0.2f;
+    public LayerMask GroundLayers;
 
     Rigidbody rb;
 
+    //Jump vars
     bool jump = false;
     bool holdJump = false;
     float jumpTimer;
 
-    [Header("Player isGrounded Vars")]
+    //Ground detection vars
+    [Header("Player Ground Detection:")]
     [Range(0.1f, 3f)][SerializeField] float PlayerWidth = 1;
     [Range(0.1f, 3f)][SerializeField] float PlayerHeight = 1;
     [Range(0, 1)][SerializeField]float PlayerCenter = 0.5f;
 
-    [Header("Debug Vars")]
+    //Player detection vars
+    [Header("Player Detection:")]
+    private PlayerDetector playerDetectorScript;
+    public LayerMask PlayerDetectionObstaclesLayer;
+
+    //Debug vars
+    [Header("Debug Vars:")]
     [SerializeField] bool isGrounded = true;
+    [SerializeField] bool debugMode;
+    private Color debugHit = Color.green;
+    private Color debugHidden = Color.red;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        //Get  Scripts
+        playerDetectorScript = gameObject.GetComponentInChildren<PlayerDetector>();
 
         //Set the jump timer
         jumpTimer = DefaultJumpTime + JumpBoosterDelay;
@@ -42,12 +59,10 @@ public class PlayerMotor : MonoBehaviour {
 
         Vector3 _playerCenter = new Vector3(transform.position.x, transform.position.y - PlayerHeight / 2 + PlayerHeight * PlayerCenter, transform.position.z);
 
-        if (Physics.Raycast(_playerCenter - new Vector3(PlayerWidth / 2 + 0.01f, 0, 0), -transform.up, out hit, PlayerHeight * PlayerCenter + 0.01f))
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Environment"))
+        if (Physics.Raycast(_playerCenter - new Vector3(PlayerWidth / 2 + 0.01f, 0, 0), -transform.up, out hit, PlayerHeight * PlayerCenter + 0.01f, GroundLayers))
                 _rayGround = true;
 
-        if (Physics.Raycast(_playerCenter + new Vector3(PlayerWidth / 2 + 0.01f, 0, 0), -transform.up, out hit, PlayerHeight * PlayerCenter + 0.01f))
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Environment"))
+        if (Physics.Raycast(_playerCenter + new Vector3(PlayerWidth / 2 + 0.01f, 0, 0), -transform.up, out hit, PlayerHeight * PlayerCenter + 0.01f, GroundLayers))
                 _rayGround = true;
 
         if (_rayGround)
@@ -117,5 +132,44 @@ public class PlayerMotor : MonoBehaviour {
 
         jump = false;
         jumpTimer = DefaultJumpTime + JumpBoosterDelay;
+    }
+
+    /// <summary>
+    /// Hand over the item to the other player
+    /// </summary>
+    public void HandOverItem()
+    {
+        if (!playerDetectorScript.isCollidingWithPlayer || playerDetectorScript.OtherPlayer == null)
+            return;
+        
+        RaycastHit _hit;
+
+        Debug.DrawLine(transform.position, playerDetectorScript.OtherPlayer.transform.position, debugHidden, 3);
+
+        if (Physics.Linecast(transform.position, playerDetectorScript.OtherPlayer.transform.position, out _hit, PlayerDetectionObstaclesLayer))
+        {
+            
+            if (debugMode)
+            {
+                Debug.DrawLine(transform.position, _hit.point, debugHit, 3);
+                Debug.DrawLine(_hit.point, playerDetectorScript.OtherPlayer.transform.position, debugHidden, 3);
+                Debug.Log(LayerMask.LayerToName(_hit.transform.gameObject.layer));
+            }
+            Debug.Log("blocked");
+        }
+        else
+        {
+            if (debugMode) { Debug.DrawLine(transform.position, playerDetectorScript.OtherPlayer.transform.position, debugHit, 3); }
+
+            Debug.Log("Item could be handed over");
+
+            CmdHandOverItem(transform.name, playerDetectorScript.OtherPlayer.name);
+        }
+    }
+
+    [Command]
+    void CmdHandOverItem(string playerName, string otherPlayerName)
+    {
+        Debug.Log(playerName + " gave the item to " + otherPlayerName);
     }
 }
