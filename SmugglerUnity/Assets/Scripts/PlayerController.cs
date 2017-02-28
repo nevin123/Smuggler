@@ -11,17 +11,23 @@ public class PlayerController : NetworkBehaviour {
 
     void Start()
     {
+        PlayerManager.instance.RegisterPlayer(netId.ToString(), gameObject);
+
         //Move the player to the correct spawn point
         SpawnPlayers.instance.SpawnPlayer(gameObject, isServer);
 
         //Remore the script if its not the local player
         if(!isLocalPlayer)
         {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<PlayerMotor>().enabled = false;
             Destroy(this);
             return;
         }
 
         Motor = GetComponent<PlayerMotor>();
+
+        PlayerManager.instance.PlayerName = gameObject.name;
     }
 
 	void FixedUpdate()
@@ -41,24 +47,7 @@ public class PlayerController : NetworkBehaviour {
         //Give
         if(Input.GetButtonDown("Use"))
         {
-            //Debug.DrawLine(transform.position, transform.position + transform.forward * 3);
-            RaycastHit hit;
-            Vector3 _dir = Vector3.zero;
-
-            if (isServer)
-                _dir = transform.forward;
-            else
-                _dir = -transform.forward;
-
-            Debug.DrawLine(transform.position, _dir, Color.red);
-
-            if(Physics.Raycast(transform.position, _dir, out hit))
-            {
-                if(hit.transform.tag == "Player")
-                {
-                    Debug.Log("Give");
-                }
-            }
+            Motor.HandOverItem();
         }
     }
 }
