@@ -17,23 +17,24 @@ Platform assembly: C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Man
 Loading C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.036 seconds
+- Completed reload, in  0.050 seconds
 Platform assembly: C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Gebruiker\Desktop\Smuggler\_Builds\Smuggler_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 2560x2520 at -282,-1440
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.341256 ms
+UnloadTime: 1.736203 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 21e4 -> priority: 1 
-  Thread -> id: 10c4 -> priority: 1 
-Player 1 gave the item to Player 1
+  Thread -> id: 1394 -> priority: 1 
+  Thread -> id: 1db8 -> priority: 1 
+Player 2
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Player 1
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:7777}
+ClientDisconnected due to error: Timeout
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 

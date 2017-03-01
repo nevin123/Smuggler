@@ -29,10 +29,19 @@ public class PlayerController : NetworkBehaviour {
 
 	void FixedUpdate()
     {
-        //Move Player
-        Motor.MovePlayer(Input.GetAxisRaw("Horizontal"));
+        //Move Player Function
+        int _multiplier = 0;
 
-        //Jump
+        if (isServer)
+            _multiplier = 1;
+        else
+            _multiplier = -1;
+
+        Vector3 _direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, _multiplier * Motor.ZMovementMultiplier * Input.GetAxisRaw("Vertical")).normalized;
+        
+        Motor.MovePlayer(_direction);
+
+        //Jump Function
         if (Input.GetButton("Jump"))
         {
             Motor.Jump();
@@ -41,7 +50,7 @@ public class PlayerController : NetworkBehaviour {
             Motor.StopJump();
         }
 
-        //Give
+        //Give Function
         if(Input.GetButtonDown("Use"))
         {
             Motor.HandOverItem();
@@ -53,9 +62,6 @@ public class PlayerController : NetworkBehaviour {
     {
         if(col.transform.tag == "Package")
         {
-            col.transform.GetComponent<BoxCollider>().enabled = false;
-            col.transform.GetComponent<Rigidbody>().isKinematic = true;
-
             col.transform.parent = Motor.Holder.transform;
             col.transform.localPosition = Vector3.zero;
 
