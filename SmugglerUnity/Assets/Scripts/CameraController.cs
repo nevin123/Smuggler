@@ -52,7 +52,7 @@ public class CameraController : NetworkBehaviour {
         if (playerCamera == null)
             return;
 
-        if (transform.position.z < 0)
+        if (isServer)
             newPos = transform.position + cameraOffset;
         else
             newPos = transform.position + new Vector3(-cameraOffset.x, cameraOffset.y, -cameraOffset.z);

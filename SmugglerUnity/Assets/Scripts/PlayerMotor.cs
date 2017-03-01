@@ -30,6 +30,9 @@ public class PlayerMotor : NetworkBehaviour {
     private PlayerDetector playerDetectorScript;
     public LayerMask PlayerDetectionObstaclesLayer;
 
+    //Package Vars
+    public GameObject Holder;
+
     //Debug vars
     [Header("Debug Vars:")]
     [SerializeField] bool isGrounded = true;
@@ -139,7 +142,7 @@ public class PlayerMotor : NetworkBehaviour {
     /// </summary>
     public void HandOverItem()
     {
-        if (!playerDetectorScript.isCollidingWithPlayer || playerDetectorScript.OtherPlayer == null)
+        if (!playerDetectorScript.isCollidingWithPlayer || playerDetectorScript.OtherPlayer == null || transform.name != PlayerManager.instance.PlayerThatHoldsTheItem)
             return;
         
         RaycastHit _hit;
@@ -168,8 +171,26 @@ public class PlayerMotor : NetworkBehaviour {
     }
 
     [Command]
-    void CmdHandOverItem(string playerName, string otherPlayerName)
+    public void CmdHandOverItem(string playerName, string otherPlayerName)
     {
         Debug.Log(playerName + " gave the item to " + otherPlayerName);
+
+        //PlayerManager.instance.HandOverItemToPlayer(otherPlayerName);
+        RpcHandOverPackage(otherPlayerName);
+    }
+
+    [ClientRpc]
+    public void RpcHandOverPackage(string _playerName)
+    {
+        if (!PlayerManager.instance.Players.ContainsKey(_playerName))
+            return;
+
+        if (_playerName == PlayerManager.instance.PlayerThatHoldsTheItem)
+            return;
+
+        PlayerManager.instance.PlayerThatHoldsTheItem = _playerName;
+        Debug.Log(PlayerManager.instance.PlayerThatHoldsTheItem);
+
+        PlayerManager.instance.UpdatePackageVisuals();
     }
 }

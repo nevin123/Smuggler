@@ -15,6 +15,9 @@ public class PlayerManager : NetworkBehaviour {
 
     //variables
     public string PlayerName = "";
+    public string PlayerThatHoldsTheItem = "";
+
+    public GameObject Package;
 
     public Dictionary<string, GameObject> Players = new Dictionary<string, GameObject>();
 
@@ -29,5 +32,17 @@ public class PlayerManager : NetworkBehaviour {
         _playerGameObject.name = _playerName;
 
         Players.Add(_playerName, _playerGameObject);
+    }
+
+    /// <summary>
+    /// Place the visuals of the package to the player that holds the item
+    /// </summary>
+    public void UpdatePackageVisuals()
+    {
+        Package.transform.GetComponent<BoxCollider>().enabled = false;
+        Package.transform.GetComponent<Rigidbody>().isKinematic = true;
+
+        Package.transform.parent = Players[PlayerThatHoldsTheItem].GetComponent<PlayerMotor>().Holder.transform;
+        Package.transform.localPosition = Vector3.zero;
     }
 }

@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 65844515586858136}
   - component: {fileID: 136718726466887090}
   - component: {fileID: 54402551779476952}
-  - component: {fileID: 114274001994380386}
   - component: {fileID: 114123621695885580}
+  - component: {fileID: 114274001994380386}
   - component: {fileID: 114747515063902246}
   - component: {fileID: 114753030692799282}
   - component: {fileID: 114646899421150570}
@@ -33,6 +33,21 @@ GameObject:
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1310374706631946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4483459803843766}
+  m_Layer: 0
+  m_Name: holder
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +82,19 @@ Transform:
   m_Father: {fileID: 4663871421587780}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4483459803843766
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1310374706631946}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4663871421587780}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4663871421587780
 Transform:
   m_ObjectHideFlags: 1
@@ -74,10 +102,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178979596217956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.87, y: 0.5, z: -1}
+  m_LocalPosition: {x: -4.87, y: 0.7, z: -1}
   m_LocalScale: {x: 0.7, y: 1.4, z: 0.7}
   m_Children:
   - {fileID: 4170457138117140}
+  - {fileID: 4483459803843766}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -181,6 +210,7 @@ MonoBehaviour:
   PlayerDetectionObstaclesLayer:
     serializedVersion: 2
     m_Bits: 768
+  Holder: {fileID: 1310374706631946}
   isGrounded: 1
   debugMode: 1
 --- !u!114 &114388001514277504
