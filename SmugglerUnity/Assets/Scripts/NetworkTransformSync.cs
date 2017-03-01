@@ -3,12 +3,15 @@ using UnityEngine.Networking;
 
 public class NetworkTransformSync : NetworkBehaviour {
 
-    [SerializeField] [Range(1,30)]
-    int UpdateFrequenty;
+    [SerializeField] [Range(1,30)] int UpdateFrequenty;
+
+    [SerializeField] float MovementInterpolation;
 
     float SendTimer;
 
     Vector3 LastPosition = Vector3.zero;
+    public Vector3 NewPosition = Vector3.zero;
+    Vector3 CurrentVelocity = Vector3.zero;
 
     void Start()
     {
@@ -17,9 +20,13 @@ public class NetworkTransformSync : NetworkBehaviour {
 
     void Update()
     {
-        //Dont send position if its not the localplayer
+        //Dont send position if its not the localplayer, but move it to the received position instead
         if (!isLocalPlayer)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, NewPosition, ref CurrentVelocity, MovementInterpolation);
+
             return;
+        }
 
         //Check if the position of the player is changed, else return
         if (transform.position == LastPosition)
@@ -39,12 +46,14 @@ public class NetworkTransformSync : NetworkBehaviour {
         SendTimer = 1f / UpdateFrequenty;
     }
 
+    //Send the player ID + position to the server
     [Command]
     void CmdUpdatePlayerTransform(string playerName, Vector3 newPosition)
     {
         RpcSetPlayers(playerName, newPosition);
     }
 
+    //Send the new Player position to all the clients
     [ClientRpc]
     public void RpcSetPlayers(string _name, Vector3 _position)
     {
@@ -54,6 +63,7 @@ public class NetworkTransformSync : NetworkBehaviour {
 
         //Checks if the player name exists, if it does, set the new player position
         if (PlayerManager.instance.Players.ContainsKey(_name))
-            PlayerManager.instance.Players[_name].transform.position = _position;
+            NewPosition = _position;
+            //PlayerManager.instance.Players[_name].transform.position = _position;
     }
 }

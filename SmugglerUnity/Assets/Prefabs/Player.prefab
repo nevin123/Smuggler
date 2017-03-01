@@ -208,7 +208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a98022803cef140bb83ec4e286d330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpdateFrequenty: 30
+  UpdateFrequenty: 20
+  MovementInterpolation: 0.035
+  NewPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114646899421150570
 MonoBehaviour:
   m_ObjectHideFlags: 1
