@@ -4,9 +4,12 @@ using UnityEngine.Networking;
 public class CameraController : NetworkBehaviour {
 
     Camera playerCamera;
-    [SerializeField] Vector3 cameraOffset;
-    [SerializeField] float speed;
-    [SerializeField] float smoothTime = 0.3F;
+    [SerializeField]
+    Vector3 cameraOffset;
+    [SerializeField]
+    float speed;
+    [SerializeField]
+    float smoothTime = 0.3F;
 
     private Vector3 newPos;
     private Vector3 velocity = Vector3.zero;
@@ -14,8 +17,7 @@ public class CameraController : NetworkBehaviour {
     // Use this for initialization
     void Start() {
         //Destoy Script if this is not the local player
-        if(!isLocalPlayer)
-        {
+        if (!isLocalPlayer) {
             Destroy(this);
             return;
         }
@@ -28,10 +30,9 @@ public class CameraController : NetworkBehaviour {
         playerCamera.ResetProjectionMatrix();
 
         //Rotate the camera
-        if (!isServer)
-        {
+        if (!isServer) {
             playerCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
-            
+
             Matrix4x4 mat = playerCamera.projectionMatrix;
 
             mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
@@ -39,10 +40,9 @@ public class CameraController : NetworkBehaviour {
 
             //Fix the inverted scene
             GL.invertCulling = true;
-        }
-        else
-        {
+        } else {
             newPos = transform.position + new Vector3(cameraOffset.x, cameraOffset.y, -cameraOffset.z);
+            newPos.z = -cameraOffset.z;
             playerCamera.transform.rotation = Quaternion.identity;
         }
     }
