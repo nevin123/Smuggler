@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 87c823eb078b5b541a54a4ab77064de2
-timeCreated: 1488278098
+guid: 0984e5c4052e5e44186db5db63ca6702
+timeCreated: 1488412542
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: floor
+    4300000: shopHighAdBigRight
   materials:
     importMaterials: 1
     materialName: 0
