@@ -62,8 +62,12 @@ public class PlayerController : NetworkBehaviour {
     {
         if(col.transform.tag == "Package")
         {
+            col.transform.GetComponent<BoxCollider>().enabled = false;
+            col.transform.GetComponent<Rigidbody>().isKinematic = true;
+
             col.transform.parent = Motor.Holder.transform;
             col.transform.localPosition = Vector3.zero;
+            col.transform.localRotation = Quaternion.identity;
 
             Motor.CmdHandOverItem(transform.name, transform.name);
         }

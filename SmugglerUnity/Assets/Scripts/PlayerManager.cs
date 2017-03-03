@@ -44,5 +44,6 @@ public class PlayerManager : NetworkBehaviour {
 
         Package.transform.parent = Players[PlayerThatHoldsTheItem].GetComponent<PlayerMotor>().Holder.transform;
         Package.transform.localPosition = Vector3.zero;
+        Package.transform.localRotation = Quaternion.identity;
     }
 }

@@ -10,7 +10,8 @@ public class NetworkTransformSync : NetworkBehaviour {
     float SendTimer;
 
     Vector3 LastPosition = Vector3.zero;
-    public Vector3 NewPosition = Vector3.zero;
+    float NewYRotation = 0;
+    Vector3 NewPosition = Vector3.zero;
     Vector3 CurrentVelocity = Vector3.zero;
 
     void Start()
@@ -24,6 +25,7 @@ public class NetworkTransformSync : NetworkBehaviour {
         if (!isLocalPlayer)
         {
             transform.position = Vector3.SmoothDamp(transform.position, NewPosition, ref CurrentVelocity, MovementInterpolation);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, NewYRotation, 0), 15 * Time.deltaTime);
 
             return;
         }
@@ -41,21 +43,21 @@ public class NetworkTransformSync : NetworkBehaviour {
         if (SendTimer > 0)
             return;
 
-        CmdUpdatePlayerTransform(transform.name, transform.position);
+        CmdUpdatePlayerTransform(transform.name, transform.position, transform.rotation.eulerAngles.y);
         LastPosition = transform.position;
         SendTimer = 1f / UpdateFrequenty;
     }
 
     //Send the player ID + position to the server
     [Command]
-    void CmdUpdatePlayerTransform(string playerName, Vector3 newPosition)
+    void CmdUpdatePlayerTransform(string playerName, Vector3 newPosition, float newYRoation)
     {
-        RpcSetPlayers(playerName, newPosition);
+        RpcSetPlayers(playerName, newPosition, newYRoation);
     }
 
     //Send the new Player position to all the clients
     [ClientRpc]
-    public void RpcSetPlayers(string _name, Vector3 _position)
+    public void RpcSetPlayers(string _name, Vector3 _position, float _newYRotation)
     {
         //If this is not your own player
         if (PlayerManager.instance.PlayerName == _name)
@@ -63,7 +65,9 @@ public class NetworkTransformSync : NetworkBehaviour {
 
         //Checks if the player name exists, if it does, set the new player position
         if (PlayerManager.instance.Players.ContainsKey(_name))
+        {
             NewPosition = _position;
-            //PlayerManager.instance.Players[_name].transform.position = _position;
+            NewYRotation = _newYRotation;
+        }
     }
 }

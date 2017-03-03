@@ -160,12 +160,16 @@ public class PlayerMotor : NetworkBehaviour {
     }
 
     /// <summary>
-    /// Move Player
+    /// Move and Rotate Player
     /// </summary>
     /// <param name="_direction">The direction the player has to move towards</param>
     public void MovePlayer(Vector3 _direction)
     {
         Vector3 _movementValue = _direction * MovementSpeed * Time.deltaTime;
+
+        if(_direction != Vector3.zero)
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), 10 * Time.deltaTime);
+
         rb.velocity = new Vector3(_movementValue.x, rb.velocity.y, _movementValue.z);
     }
 
