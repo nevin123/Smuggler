@@ -6,6 +6,7 @@ public class CameraController : NetworkBehaviour {
     Camera playerCamera;
     [SerializeField]
     Vector3 cameraOffset;
+    Vector3 defaultCameraOffset;
     [SerializeField]
     float speed;
     [SerializeField]
@@ -16,6 +17,8 @@ public class CameraController : NetworkBehaviour {
 
     // Use this for initialization
     void Start() {
+        defaultCameraOffset = cameraOffset;
+
         //Destoy Script if this is not the local player
         if (!isLocalPlayer) {
             Destroy(this);
@@ -59,5 +62,9 @@ public class CameraController : NetworkBehaviour {
 
 
         playerCamera.transform.position = Vector3.SmoothDamp(playerCamera.transform.position, newPos, ref velocity, smoothTime);
+    }
+
+    public void setCameraOffset(Vector3 newOffset) {
+        cameraOffset = newOffset;
     }
 }
