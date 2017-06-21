@@ -233,12 +233,14 @@ MonoBehaviour:
   maxLimit: 40
   minLimit: 25
   rotationSpeed: 0.2
-  layers:
+  blockingLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   detectionRange: 6
   alertColor: {r: 1, g: 0, b: 0, a: 0}
   debugMode: 1
+  debugHit: {r: 0.65517235, g: 0, b: 1, a: 1}
+  debugHidden: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114040002919051116
 MonoBehaviour:
   m_ObjectHideFlags: 1

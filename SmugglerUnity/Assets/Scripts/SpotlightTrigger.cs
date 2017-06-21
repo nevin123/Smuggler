@@ -13,11 +13,11 @@ public class SpotlightTrigger : MonoBehaviour {
     }
     // Update is called once per frame
     void OnTriggerEnter(Collider hitCollider) {
-        parent.OnChildTriggerEnter(spotCollider, hitCollider);
+        //parent.OnChildTriggerEnter(spotCollider, hitCollider);
     }
 
     void OnTriggerExit(Collider hitCollider) {
-        parent.OnChildTriggerExit(spotCollider, hitCollider);
+        //parent.OnChildTriggerExit(spotCollider, hitCollider);
     }
     void OnTriggerStay(Collider hitCollider) {
         parent.OnChildTriggerStay(spotCollider, hitCollider);
