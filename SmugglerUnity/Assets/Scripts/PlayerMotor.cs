@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 
 [RequireComponent (typeof(Rigidbody))]
 public class PlayerMotor : NetworkBehaviour {
-
+    
     //Movement vars
     [Header("Movement Vars")]
     public float MovementSpeed = 50;
