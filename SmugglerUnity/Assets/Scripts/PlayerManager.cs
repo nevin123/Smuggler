@@ -37,9 +37,10 @@ public class PlayerManager : NetworkBehaviour {
     /// <summary>
     /// Place the visuals of the package to the player that holds the item
     /// </summary>
-    public void UpdatePackageVisuals()
-    {
-        Package.transform.GetComponent<BoxCollider>().enabled = false;
+    public void UpdatePackageVisuals() {
+        //Package.transform.GetComponent<BoxCollider>().enabled = false;
+        Package.transform.GetComponent<BoxCollider>().size = Vector3.zero;
+
         Package.transform.GetComponent<Rigidbody>().isKinematic = true;
 
         Package.transform.parent = Players[PlayerThatHoldsTheItem].GetComponent<PlayerMotor>().Holder.transform;

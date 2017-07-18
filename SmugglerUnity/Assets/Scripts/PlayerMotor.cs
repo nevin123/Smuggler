@@ -28,8 +28,8 @@ public class PlayerMotor : NetworkBehaviour {
 
     //Player detection vars
     [Header("Player Detection:")]
-    private PlayerDetector playerDetectorScript;
-    public LayerMask PlayerDetectionObstaclesLayer;
+    private TagDetector tagDetectorScript;
+    public LayerMask tagDetectionObstaclesLayer;
 
     //Package Vars
     public GameObject Holder;
@@ -48,7 +48,7 @@ public class PlayerMotor : NetworkBehaviour {
         rb = GetComponent<Rigidbody>();
 
         //Get  Scripts
-        playerDetectorScript = gameObject.GetComponentInChildren<PlayerDetector>();
+        tagDetectorScript = gameObject.GetComponentInChildren<TagDetector>();
 
         //Set the jump timer
         jumpTimer = DefaultJumpTime + JumpBoosterDelay;
@@ -197,31 +197,31 @@ public class PlayerMotor : NetworkBehaviour {
     /// </summary>
     public void HandOverItem()
     {
-        if (!playerDetectorScript.isCollidingWithPlayer || playerDetectorScript.OtherPlayer == null || transform.name != PlayerManager.instance.PlayerThatHoldsTheItem)
+        if (!tagDetectorScript.isCollidingWithPlayer || tagDetectorScript.otherObject == null || transform.name != PlayerManager.instance.PlayerThatHoldsTheItem)
             return;
         
         RaycastHit _hit;
 
-        Debug.DrawLine(transform.position, playerDetectorScript.OtherPlayer.transform.position, debugHidden, 3);
+        Debug.DrawLine(transform.position, tagDetectorScript.otherObject.transform.position, debugHidden, 3);
 
-        if (Physics.Linecast(transform.position, playerDetectorScript.OtherPlayer.transform.position, out _hit, PlayerDetectionObstaclesLayer))
+        if (Physics.Linecast(transform.position, tagDetectorScript.otherObject.transform.position, out _hit, tagDetectionObstaclesLayer))
         {
             
             if (debugMode)
             {
                 Debug.DrawLine(transform.position, _hit.point, debugHit, 3);
-                Debug.DrawLine(_hit.point, playerDetectorScript.OtherPlayer.transform.position, debugHidden, 3);
+                Debug.DrawLine(_hit.point, tagDetectorScript.otherObject.transform.position, debugHidden, 3);
                 Debug.Log(LayerMask.LayerToName(_hit.transform.gameObject.layer));
             }
             Debug.Log("blocked");
         }
         else
         {
-            if (debugMode) { Debug.DrawLine(transform.position, playerDetectorScript.OtherPlayer.transform.position, debugHit, 3); }
+            if (debugMode) { Debug.DrawLine(transform.position, tagDetectorScript.otherObject.transform.position, debugHit, 3); }
 
             Debug.Log("Item could be handed over");
 
-            CmdHandOverItem(transform.name, playerDetectorScript.OtherPlayer.name);
+            CmdHandOverItem(transform.name, tagDetectorScript.otherObject.name);
         }
     }
 
