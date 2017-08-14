@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/NewPlayerMovementScene.unity
+- path: Assets/test/materialTest.unity
   isLoaded: 1
   isActive: 1

@@ -13,7 +13,8 @@ public class CharacterMotor : MonoBehaviour {
     float horizontalRaySpacing;
     float verticalRaySpacing;
 
-    public float maxClimbAngle = 60f;
+    public float MaxClimbAngle = 60f;
+    public float MaxDescendAngle = 60f;
 
     CapsuleCollider collider;
     RaycastOrigins raycastOrigins;
@@ -28,6 +29,10 @@ public class CharacterMotor : MonoBehaviour {
     public void Move(Vector3 velocity) {
         UpdateRaycastOrigins();
         collisions.Reset();
+
+        if(velocity.y < 0)
+            DescendSlope(ref velocity);
+        
         HorizontalCollisions(ref velocity);
         VerticalCollisions(ref velocity);
 
@@ -48,7 +53,7 @@ public class CharacterMotor : MonoBehaviour {
 
             for (int i = 0; i < HorizontalRayCounts; i++)
             {
-                rayOrigin += (i == 0)?Vector3.zero:new Vector3(0, horizontalRaySpacing, 0);
+                rayOrigin += (i == 0) ? Vector3.zero : new Vector3(0, horizontalRaySpacing, 0);
 
                 RaycastHit hitX;
                 RaycastHit hitZ;
@@ -57,11 +62,11 @@ public class CharacterMotor : MonoBehaviour {
                 {
                     float slopeAngle = Vector3.Angle(hitX.normal, Vector3.up);
                     Vector2 slopeDirection = new Vector2(hitX.normal.x, hitX.normal.z).normalized * -1f;
-                    
-                    if (i == 0 && slopeAngle <= maxClimbAngle && !collisions.climbingSlope)
+
+                    if (i == 0 && slopeAngle <= MaxClimbAngle && !collisions.climbingSlope)
                     {
                         float distanceToSlopeStart = 0;
-                        if(slopeAngle != collisions.slopeAngleOld)
+                        if (slopeAngle != collisions.slopeAngleOld)
                         {
                             distanceToSlopeStart = hitX.distance - skinWidth;
                             velocity.x -= distanceToSlopeStart * directionX;
@@ -70,12 +75,12 @@ public class CharacterMotor : MonoBehaviour {
                         velocity.x += distanceToSlopeStart * directionX;
                     }
 
-                    if (!collisions.climbingSlope || slopeAngle > maxClimbAngle)
+                    if (!collisions.climbingSlope || slopeAngle > MaxClimbAngle)
                     {
                         velocity.x = (hitX.distance - skinWidth) * directionX;
                         rayLengthX = hitX.distance;
 
-                        if(collisions.climbingSlope)
+                        if (collisions.climbingSlope)
                         {
                             velocity.y = Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
                         }
@@ -87,7 +92,7 @@ public class CharacterMotor : MonoBehaviour {
                     float slopeAngle = Vector3.Angle(hitZ.normal, Vector3.up);
                     Vector2 slopeDirection = new Vector2(hitZ.normal.x, hitZ.normal.z).normalized * -1f;
 
-                    if (i == 0 && slopeAngle <= maxClimbAngle && !collisions.climbingSlope)
+                    if (i == 0 && slopeAngle <= MaxClimbAngle && !collisions.climbingSlope)
                     {
                         float distanceToSlopeStart = 0;
                         if (slopeAngle != collisions.slopeAngleOld)
@@ -99,7 +104,7 @@ public class CharacterMotor : MonoBehaviour {
                         velocity.z += distanceToSlopeStart * directionZ;
                     }
 
-                    if (!collisions.climbingSlope || slopeAngle > maxClimbAngle)
+                    if (!collisions.climbingSlope || slopeAngle > MaxClimbAngle)
                     {
                         velocity.z = (hitZ.distance - skinWidth) * directionZ;
                         rayLengthZ = hitZ.distance;
@@ -127,12 +132,12 @@ public class CharacterMotor : MonoBehaviour {
             Vector3 rayOrigin = (directionY == -1) ? raycastOrigins.floor : raycastOrigins.top;
             rayOrigin += new Vector3((float)Mathf.Cos(verticalRaySpacing * i) * raycastOrigins.radius, 0f, (float)Mathf.Sin(verticalRaySpacing * i) * raycastOrigins.radius);
             RaycastHit hit;
-                
-            if(Physics.Raycast(rayOrigin, Vector3.up * directionY, out hit, rayLength, CollisionMask)) {
+
+            if (Physics.Raycast(rayOrigin, Vector3.up * directionY, out hit, rayLength, CollisionMask)) {
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
-                if(collisions.climbingSlope)
+                if (collisions.climbingSlope)
                 {
                     velocity.x = velocity.y / Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * (Mathf.Sign(velocity.x) * velocity.x);
                     velocity.z = velocity.y / Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * (Mathf.Sign(velocity.z) * velocity.z);
@@ -174,6 +179,12 @@ public class CharacterMotor : MonoBehaviour {
             collisions.slopeAngle = slopeAngle;
         }
     }
+
+    void DescendSlope(ref Vector3 velocity)
+    {
+
+    }
+
 
     void UpdateRaycastOrigins()
     {
